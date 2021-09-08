@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.youtubesimpleclone.R
 import com.example.youtubesimpleclone.model.VideoModel
 
-class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(val callback: (String, String) -> Unit) : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
 
@@ -28,6 +28,10 @@ class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) 
             Glide.with(thumbnailImageView.context)
                 .load(item.thumb)
                 .into(thumbnailImageView)
+
+            view.setOnClickListener {
+                callback(item.sources, item.title)
+            }
         }
     }
 
